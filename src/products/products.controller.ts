@@ -29,6 +29,8 @@ export class ProductsController {
   @MessagePattern({ cmd: 'find_one_product' })
   // findOne(@Param('id') id: string) {
   findOne(@Payload('id', ParseIntPipe ) id: number) {
+    console.log({id});
+    
     return this.productsService.findOne(id);
   }
   
@@ -47,5 +49,10 @@ export class ProductsController {
   // remove(@Param('id') id: string) {
   remove(@Payload('id', ParseIntPipe) id: number) {
     return this.productsService.remove(id);
+  }
+
+  @MessagePattern({ cmd: 'validate_products' })
+  validateProduct( @Payload() ids: number[] ){
+    return this.productsService.validateProducts(ids);
   }
 }
